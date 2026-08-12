@@ -10,6 +10,7 @@ const App = () => {
     const entryToAdd = {
       content: newEntry,
       id: String(entries.length + 1),
+      timestamp: new Date().toLocaleString(),
     }
     setEntries(entries.concat(entryToAdd))
     setNewEntry('')
@@ -23,14 +24,14 @@ const App = () => {
   return (
     <div>
       <form onSubmit={addEntry}>
-        <input value={newEntry} onChange={updateNewEntry}/>
+        <textarea value={newEntry} onChange={updateNewEntry}/>
         <button type="submit">save</button>
       </form> 
-      <ul>
+      <div>
         {entries.map(entry =>
-          <li key={entry.id}>{entry.content}</li>
+          <pre key={entry.id}>{entry.content} : {entry.timestamp}</pre>
         )}
-      </ul>
+      </div>
     </div>
   )
 }
