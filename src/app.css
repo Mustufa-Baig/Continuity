@@ -7,6 +7,23 @@
 	min-width: 500px;
 }
 
+.Entries {
+	display: grid;
+	grid-template-columns: auto auto auto;
+}
+
+.Entries div {
+	border-style: solid;
+	border-radius: 20px;
+	border-width: 2px;
+	border-color: lightgray;
+	display: flex;
+	flex-direction: column;
+	/*align-items: center;*/
+	padding: 10px;
+	margin: 10px;
+}
+
 .Entry input {
 	font-size: 24px;
 	padding: 5px;

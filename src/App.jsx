@@ -15,7 +15,7 @@ const App = () => {
       id: String(entries.length + 1),
       timestamp: new Date().toLocaleString(),
     }
-    setEntries(entries.concat(entryToAdd))
+    setEntries([entryToAdd , ...entries])
     setNewEntry('')
     setNewTitle('')
   }
@@ -37,7 +37,7 @@ const App = () => {
           <button type="submit">Save</button>
         </form>
       </div>
-      <div>
+      <div className='Entries'>
         {entries.map(entry =>
           <div key={entry.id}>
             <h2>{entry.title}</h2>
