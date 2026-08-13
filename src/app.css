@@ -1,0 +1,41 @@
+.Entry {
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	justify-content: center;
+	max-width: 900px;
+	min-width: 500px;
+}
+
+.Entry input {
+	font-size: 24px;
+	padding: 5px;
+	border-style: solid;
+	border-radius: 10px;
+}
+
+.Entry textarea {
+	max-width: 900px;
+	min-width: 500px;
+	min-height: 200px;
+	font-size: 16px;
+	border-style: solid;
+	border-radius: 10px;
+	padding: 5px;
+}
+
+.Entry button {
+	font-size: 32px;
+	border-radius: 10px;
+	border-style: solid;
+	border-color: lightgray;
+}
+
+.FormHolder {
+	display: flex;
+	justify-content: center;
+}
+
+.RD {
+	color: #FF0000;
+}

@@ -1,8 +1,9 @@
 import {useState} from 'react'
+import './app.css'
 
 const App = () => {
   const [ entries, setEntries ] = useState([])
-  const [ newEntry, setNewEntry ] = useState('a new entry...')
+  const [ newEntry, setNewEntry ] = useState('')
   const [ newTitle, setNewTitle ] = useState('')
 
   const addEntry = (event) => {
@@ -29,16 +30,18 @@ const App = () => {
 
   return (
     <div>
-      <form onSubmit={addEntry}>
-        <input value={newTitle} onChange={updateNewTitle}/>
-        <textarea value={newEntry} onChange={updateNewEntry}/>
-        <button type="submit">save</button>
-      </form> 
+      <div className='FormHolder'>
+        <form onSubmit={addEntry} className='Entry'>
+          <input placeholder='Project Name' value={newTitle} onChange={updateNewTitle}/>
+          <textarea placeholder='new entry for Project...' value={newEntry} onChange={updateNewEntry}/>
+          <button type="submit">Save</button>
+        </form>
+      </div>
       <div>
         {entries.map(entry =>
           <div key={entry.id}>
             <h2>{entry.title}</h2>
-            <pre>{entry.content}</pre>
+            <pre className='RD'>{entry.content}</pre>
             <p>{entry.timestamp}</p>
           </div>
         )}
