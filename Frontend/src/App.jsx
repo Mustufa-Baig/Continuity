@@ -1,4 +1,5 @@
-import {useState} from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 import './app.css'
 
 const App = () => {
@@ -6,18 +7,29 @@ const App = () => {
   const [ newEntry, setNewEntry ] = useState('')
   const [ newTitle, setNewTitle ] = useState('')
 
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/')
+      .then(response => {
+        setEntries(response.data)
+      })
+  }, [])
+
   const addEntry = (event) => {
     event.preventDefault()
 
     const entryToAdd = {
       title: newTitle,
       content: newEntry,
-      id: String(entries.length + 1),
-      timestamp: new Date().toLocaleString(),
     }
-    setEntries([entryToAdd , ...entries])
-    setNewEntry('')
-    setNewTitle('')
+
+    axios
+      .post('http://localhost:3001/entry', entryToAdd)
+      .then(response => {
+        setEntries([response.data, ...entries])
+        setNewEntry('')
+        setNewTitle('')
+      })
   }
 
   const updateNewTitle = (event) => {
