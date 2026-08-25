@@ -9,7 +9,7 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/')
+      .get('/api/entries')
       .then(response => {
         setEntries(response.data)
       })
@@ -24,7 +24,7 @@ const App = () => {
     }
 
     axios
-      .post('http://localhost:3001/entry', entryToAdd)
+      .post('/api/entries', entryToAdd)
       .then(response => {
         setEntries([response.data, ...entries])
         setNewEntry('')

@@ -1,18 +1,18 @@
 const express = require('express')
-const cors = require('cors')
+const path = require('path')
 
 const app = express()
 
-app.use(cors())
+app.use(express.static(path.join(__dirname, '../Frontend/dist')))
 app.use(express.json())
 
 let entries = []
 
-app.get('/', (request, response) => {
+app.get('/api/entries', (request, response) => {
   response.json(entries)
 })
 
-app.post('/entry', (request, response) => {
+app.post('/api/entries', (request, response) => {
   const body = request.body
 
   const entry = {
@@ -27,7 +27,7 @@ app.post('/entry', (request, response) => {
   response.status(201).json(entry)
 })
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
