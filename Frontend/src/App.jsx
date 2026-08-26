@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import StatCounter from 'statcounter'
 import axios from 'axios'
 import './app.css'
 
@@ -59,7 +58,6 @@ const App = () => {
           </div>
         )}
       </div>
-      <StatCounter sc_project={13351859} sc_security="49c1a1ac" />
     </div>
   )
 }
