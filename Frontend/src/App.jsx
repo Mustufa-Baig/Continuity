@@ -51,10 +51,10 @@ const App = () => {
       </div>
       <div className='Entries'>
         {entries.map(entry =>
-          <div key={entry.id}>
+          <div key={entry._id}>
             <h2>{entry.title}</h2>
             <pre className='RD'>{entry.content}</pre>
-            <p>{entry.timestamp}</p>
+            <p>{new Date(entry.createdAt).toLocaleString()}</p>
           </div>
         )}
       </div>
