@@ -13,6 +13,9 @@ const App = () => {
       .then(response => {
         setEntries(response.data)
       })
+      .catch(error => {
+        console.log(error.response.data)
+      })
   }, [])
 
   const addEntry = (event) => {
@@ -29,6 +32,9 @@ const App = () => {
         setEntries([response.data, ...entries])
         setNewEntry('')
         setNewTitle('')
+      })
+      .catch(error => {
+        console.log(error.response.data)
       })
   }
 

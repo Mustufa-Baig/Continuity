@@ -22,10 +22,12 @@ const entrySchema = new mongoose.Schema(
   {
     title: {
       type: String,
+      minLength: 2,
       required: true,
     },
     content: {
       type: String,
+      minLength: 2,
       required: true,
     },
   },
@@ -47,7 +49,7 @@ app.get('/api/entries', async (request, response) => {
   }
 })
 
-app.post('/api/entries', async (request, response) => {
+app.post('/api/entries', async (request, response, next) => {
   try {
     const { title, content } = request.body
 
@@ -59,11 +61,29 @@ app.post('/api/entries', async (request, response) => {
     const savedEntry = await entry.save()
 
     response.status(201).json(savedEntry)
-  } catch (error) {
-    console.error(error)
-    response.status(400).json({ error: 'Failed to create entry' })
-  }
+  } catch (error) { next(error) }
 })
+
+
+const errorHandler = (error, request, response, next) => {
+
+  if (error.name === 'ValidationError') {
+    return response.status(400).json({
+      error: 'Validation failed',
+      details: Object.values(error.errors).map((err) => ({
+        field: err.path,
+        message: err.message,
+      })),
+    })
+  }
+
+  console.error(error)
+  response.status(500).json({
+    error: 'Internal server error',
+  })
+}
+
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
 
