@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import './app.css'
 import EntryForm from './components/EntryForm'
 import EntriesList from './components/EntriesList'
 import entriesService from './services/entries'
