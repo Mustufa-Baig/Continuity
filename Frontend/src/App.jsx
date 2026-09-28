@@ -6,6 +6,8 @@ import EntriesList from './components/EntriesList'
 import Header from './components/Header'
 import Login from './components/Login'
 
+import card from './assets/card2.jpg';
+
 import entriesService from './services/entries'
 import loginService from './services/login'
 
@@ -84,10 +86,12 @@ const App = () => {
 
   if (!user){
     return(
-      <div className="flex flex-col items-center justify-between h-screen">
-        <h1>Continuity</h1>
+      <div className="flex justify-end h-screen items-center bg-neutral-950">
+        <h1 className="absolute bottom-[8vh] left-[3vw] font-grotesk text-neutral-100 text-shadow-md text-shadow-olive-700 text-4xl">Zero effort<br/>Project Tracking</h1>
+        <div className="flex justify-start items-center w-[50vw] h-[100vh]">
+          <img src={card} className="w-[45vw] h-[95vh] object-cover rounded-xl ml-4"/>
+        </div>
         <Login handleLogin={handleLogin} message={message}/>
-        <h1>Mirza Mustafa 2026</h1>
       </div>
     )
   }
