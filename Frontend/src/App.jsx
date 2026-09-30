@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-import EntryForm from './components/EntryForm'
-import EntriesList from './components/EntriesList'
-import Header from './components/Header'
+import {
+  Routes, Route, Link, useNavigate
+} from 'react-router-dom'
+
 import Login from './components/Login'
-import Sidebar from './components/Sidebar'
-import BlockGraph from './components/BlockGraph'
-import AttentionGraph from './components/AttentionGraph'
+
+import Dashboard from './components/Dashboard'
+import CreateEntry from './components/CreateEntry'
+import ProtectedRoute from './components/ProtectedRoute'
 
 import card from './assets/card2.jpg';
 
@@ -18,14 +20,18 @@ const App = () => {
   const [ entries, setEntries ] = useState([])
   const [ graphData, setGraphData ] = useState([])
   const [ user, setUser ] = useState(null)
+  const [ loading, setLoading ] = useState(true);
   const [ message, setMessage ] = useState(null)
   
+  const navigate = useNavigate()
+
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedContinuityUser')
     if (loggedUserJSON) {
       const savedUser = JSON.parse(loggedUserJSON)
       setUser(savedUser)
       entriesService.setToken(savedUser.token)
+      setLoading(false)
     }
   }, [])
 
@@ -80,6 +86,7 @@ const App = () => {
           .catch(error => {
             console.log(error)
           })
+          navigate('/')
       })
       .catch(error => {
         console.log(error.response.data.error)
@@ -98,35 +105,41 @@ const App = () => {
     window.localStorage.removeItem('loggedContinuityUser')
     setUser(null)
     entriesService.setToken(null)
+    navigate('/login')
   }
 
 
-  if (!user){
-    return(
-      <div className="flex justify-end h-screen items-center bg-neutral-950">
-        <h1 className="absolute bottom-[8vh] left-[3vw] font-grotesk text-neutral-100 text-shadow-md text-shadow-olive-700 text-4xl">Zero effort<br/>Project Tracking</h1>
-        <div className="flex justify-start items-center w-[50vw] h-[100vh]">
-          <img src={card} className="w-[45vw] h-[95vh] object-cover rounded-xl ml-4"/>
-        </div>
-        <Login handleLogin={handleLogin} message={message}/>
-      </div>
-    )
-  }
-  
   return (
-    <div className="flex h-full">
-      <Sidebar />
-      <div className="w-full h-full">
-        <Header user={user} handleLogout={handleLogout}/>
-        <div className="flex *:mx-1 my-1">
-          <BlockGraph data={graphData}/>
-          <AttentionGraph />
-        </div>
-        <EntryForm addEntry={addEntry}/>
-        <EntriesList entries={entries}/>
-      </div>
-    </div>
+    
+      <Routes>
+
+        <Route path="/login" element={
+          <div className="flex justify-end h-screen items-center bg-neutral-950">
+            <h1 className="absolute bottom-[8vh] left-[3vw] font-grotesk text-neutral-100 text-shadow-md text-shadow-olive-700 text-4xl">Zero effort<br/>Project Tracking</h1>
+            <div className="flex justify-start items-center w-[50vw] h-[100vh]">
+              <img src={card} className="w-[45vw] h-[95vh] object-cover rounded-xl ml-4"/>
+            </div>
+            <Login handleLogin={handleLogin} message={message}/>
+          </div>
+        }/>
+
+        
+        <Route path="/" element={ 
+          <ProtectedRoute user={user} loading={loading}>
+            <Dashboard user={user} entries={entries} graphData={graphData} handleLogout={handleLogout} /> 
+          </ProtectedRoute>
+        } />
+        
+        <Route path="/create" element={
+          <ProtectedRoute user={user} loading={loading}>
+            <CreateEntry user={user} addEntry={addEntry} handleLogout={handleLogout} />
+          </ProtectedRoute>
+        } />
+    
+      </Routes>
+    
   )
+
 }
 
 export default App
