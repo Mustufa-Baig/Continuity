@@ -26,4 +26,12 @@ const create = async newObject => {
   return response.data
 }
 
-export default { getAll, create, setToken }
+const dailyStats = async () => {
+  const config = {
+    headers: { Authorization: token }
+  }
+  const response = await axios.get(baseUrl+'/stats/daily',config)
+  return response.data
+}
+
+export default { getAll, create, setToken, dailyStats }

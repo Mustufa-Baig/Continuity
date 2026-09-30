@@ -5,6 +5,9 @@ import EntryForm from './components/EntryForm'
 import EntriesList from './components/EntriesList'
 import Header from './components/Header'
 import Login from './components/Login'
+import Sidebar from './components/Sidebar'
+import BlockGraph from './components/BlockGraph'
+import AttentionGraph from './components/AttentionGraph'
 
 import card from './assets/card2.jpg';
 
@@ -13,6 +16,7 @@ import loginService from './services/login'
 
 const App = () => {
   const [ entries, setEntries ] = useState([])
+  const [ graphData, setGraphData ] = useState([])
   const [ user, setUser ] = useState(null)
   const [ message, setMessage ] = useState(null)
   
@@ -27,6 +31,15 @@ const App = () => {
         .getAll()
         .then(data => {
           setEntries(data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
+      entriesService
+        .dailyStats()
+        .then(data => {
+          setGraphData(data)
         })
         .catch(error => {
           console.log(error)
@@ -84,6 +97,7 @@ const App = () => {
     entriesService.setToken(null)
   }
 
+
   if (!user){
     return(
       <div className="flex justify-end h-screen items-center bg-neutral-950">
@@ -95,11 +109,19 @@ const App = () => {
       </div>
     )
   }
+  
   return (
-    <div>
-      <Header user={user} handleLogout={handleLogout}/>
-      <EntryForm addEntry={addEntry}/>
-      <EntriesList entries={entries}/>
+    <div className="flex h-full">
+      <Sidebar />
+      <div className="w-full h-full">
+        <Header user={user} handleLogout={handleLogout}/>
+        <div className="flex *:mx-1 my-1">
+          <BlockGraph data={graphData}/>
+          <AttentionGraph />
+        </div>
+        <EntryForm addEntry={addEntry}/>
+        <EntriesList entries={entries}/>
+      </div>
     </div>
   )
 }
