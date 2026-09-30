@@ -1,6 +1,10 @@
 const BlockGraph = ({ data }) => {
 	//const MAX_VALUE = data.reduce((prev, current) => (prev.value > current.value) ? prev : current).value +10
 
+	if (data.length ===0) {
+		return null
+	}
+
 	const MAX_VALUE = 15
 	const size = 225 / MAX_VALUE
 

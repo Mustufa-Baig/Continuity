@@ -26,8 +26,12 @@ const App = () => {
       const savedUser = JSON.parse(loggedUserJSON)
       setUser(savedUser)
       entriesService.setToken(savedUser.token)
-      
-      entriesService
+    }
+  }, [])
+
+  useEffect(() => {
+    if (user){
+       entriesService
         .getAll()
         .then(data => {
           setEntries(data)
@@ -35,18 +39,17 @@ const App = () => {
         .catch(error => {
           console.log(error)
         })
-
+        
       entriesService
-        .dailyStats()
-        .then(data => {
-          setGraphData(data)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+          .dailyStats()
+          .then(data => {
+            setGraphData(data)
+          })
+          .catch(error => {
+            console.log(error)
+          })
     }
-  }, [])
-
+  }, [ user ] )
 
   const addEntry = (entryToAdd) => {
     entriesService
