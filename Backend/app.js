@@ -33,7 +33,11 @@ app.use('/api/entries', entriesRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 
-app.use(middleware.errorHandler)
 
+app.get('*splat', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../Frontend/dist/index.html'));
+});
+
+app.use(middleware.errorHandler)
 
 module.exports = app
