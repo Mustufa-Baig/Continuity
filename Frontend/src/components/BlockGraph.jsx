@@ -27,9 +27,9 @@ const BlockGraph = ({ data }) => {
 	data.forEach(day => total+= day.count)
 	
 	return(
-		<div className="w-fit font-grotesk text-neutral-500 p-2 rounded-lg bg-neutral-200">
-			<h1 className="">Recent Entries</h1>
-			<div className="bg-white p-2 rounded-lg">
+		<div className="w-fit font-grotesk text-neutral-500 p-2 rounded-xs bg-neutral-300">
+			<h1 className="ml-2 text-neutral-700">Daily Entries</h1>
+			<div className="bg-white p-2 rounded-xs">
 				<div className="flex justify-between items-center">
 					<h1 className="text-sm mb-2 font-light italic">Total Entries: <span className="text-2xl font-normal text-neutral-900">{total}</span></h1>
 					<h1 className="font-light">Past 30 days</h1>

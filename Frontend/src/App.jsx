@@ -9,6 +9,7 @@ import Login from './components/Login'
 
 import Dashboard from './components/Dashboard'
 import CreateEntry from './components/CreateEntry'
+import AllEntries from './components/AllEntries'
 import ProtectedRoute from './components/ProtectedRoute'
 
 import card from './assets/card2.jpg';
@@ -62,6 +63,7 @@ const App = () => {
       .create(entryToAdd)
       .then(data => {
         setEntries([data, ...entries])
+        navigate('/')
       })
       .catch(error => {
         console.log(error.response.data)
@@ -121,7 +123,7 @@ const App = () => {
             </div>
             <Login handleLogin={handleLogin} message={message}/>
           </div>
-        }/>
+        } />
 
         
         <Route path="/" element={ 
@@ -133,6 +135,12 @@ const App = () => {
         <Route path="/create" element={
           <ProtectedRoute user={user} loading={loading}>
             <CreateEntry user={user} addEntry={addEntry} handleLogout={handleLogout} />
+          </ProtectedRoute>
+        } />
+
+        <Route path="/entries" element={
+          <ProtectedRoute user={user} loading={loading}>
+            <AllEntries user={user} entries={entries} graphData={graphData} handleLogout={handleLogout} /> 
           </ProtectedRoute>
         } />
     

@@ -2,8 +2,10 @@ import { useLocation, Link } from 'react-router-dom';
 
 import { SiTheplanetarysociety } from "react-icons/si";
 import { RiHomeLine, RiSettingsLine } from "react-icons/ri";
-import { FaRegCircleUser, FaPencil } from "react-icons/fa6";
+import { FaRegCircleUser } from "react-icons/fa6";
+import { AiOutlineFileAdd } from "react-icons/ai";
 import { TbRobot } from "react-icons/tb";
+import { BsTextParagraph } from "react-icons/bs";
 
 const Sidebar = () => {
 	return(
@@ -11,7 +13,8 @@ const Sidebar = () => {
 			<div className="flex flex-col space-y-5 items-center *:transition-transform *:duration-200 *:ease-in-out *:hover:scale-150">
 				<SiTheplanetarysociety className="mb-15 text-3xl"/>
 				<Link to="/"><RiHomeLine className={`${location.pathname=='/' && "text-blue-400"}`}/></Link>
-				<Link to="/create"><FaPencil className={`${location.pathname=='/create' && "text-blue-400 "}`}/></Link>
+				<Link to="/create"><AiOutlineFileAdd className={`${location.pathname=='/create' ? "text-blue-400 text-[22px]" : "text-[19px]"}`}/></Link>
+				<Link to="/entries"><BsTextParagraph className={`${location.pathname=='/entries' && "text-blue-400 text-[24px]"}`}/></Link>
 				<TbRobot className="text-[22px]"/>
 				<RiSettingsLine />
 				<FaRegCircleUser className="text-[18px]"/>
