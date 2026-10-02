@@ -1,5 +1,6 @@
 import axios from 'axios'
-const baseUrl = '/api/entries'
+const baseUrl = '/api/projects'
+
 
 let token = null
 
@@ -25,12 +26,4 @@ const create = async newObject => {
   return response.data
 }
 
-const dailyStats = async () => {
-  const config = {
-    headers: { Authorization: token }
-  }
-  const response = await axios.get(baseUrl+'/stats/daily',config)
-  return response.data
-}
-
-export default { getAll, create, setToken, dailyStats }
+export default { getAll, create, setToken }

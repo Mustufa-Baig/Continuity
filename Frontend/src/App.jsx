@@ -15,13 +15,15 @@ import ProtectedRoute from './components/ProtectedRoute'
 import card from './assets/card2.jpg';
 
 import entriesService from './services/entries'
+import projectsService from './services/projects'
 import loginService from './services/login'
 
 const App = () => {
   const [ entries, setEntries ] = useState([])
+  const [ projectsList, setProjectsList ] = useState([])
   const [ graphData, setGraphData ] = useState([])
   const [ user, setUser ] = useState(null)
-  const [ loading, setLoading ] = useState(true);
+  const [ loading, setLoading ] = useState(true)
   const [ message, setMessage ] = useState(null)
   
   const navigate = useNavigate()
@@ -32,13 +34,14 @@ const App = () => {
       const savedUser = JSON.parse(loggedUserJSON)
       setUser(savedUser)
       entriesService.setToken(savedUser.token)
-      setLoading(false)
+      projectsService.setToken(savedUser.token)
     }
+    setLoading(false)
   }, [])
 
   useEffect(() => {
     if (user){
-       entriesService
+      entriesService
         .getAll()
         .then(data => {
           setEntries(data)
@@ -46,15 +49,24 @@ const App = () => {
         .catch(error => {
           console.log(error)
         })
-        
+
       entriesService
-          .dailyStats()
-          .then(data => {
-            setGraphData(data)
-          })
-          .catch(error => {
-            console.log(error)
-          })
+        .dailyStats()
+        .then(data => {
+          setGraphData(data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
+      projectsService
+        .getAll()
+        .then(data => {
+          setProjectsList(data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }, [ user ] )
 
@@ -79,6 +91,7 @@ const App = () => {
           'loggedContinuityUser', JSON.stringify(user)
         )
         entriesService.setToken(user.token)
+        projectsService.setToken(user.token)
         setUser(user)
         entriesService
           .getAll()
@@ -107,6 +120,7 @@ const App = () => {
     window.localStorage.removeItem('loggedContinuityUser')
     setUser(null)
     entriesService.setToken(null)
+    projectsService.setToken(null)
     navigate('/login')
   }
 
@@ -128,13 +142,13 @@ const App = () => {
         
         <Route path="/" element={ 
           <ProtectedRoute user={user} loading={loading}>
-            <Dashboard user={user} entries={entries} graphData={graphData} handleLogout={handleLogout} /> 
+            <Dashboard user={user} entries={entries} projectsList={projectsList} graphData={graphData} handleLogout={handleLogout} /> 
           </ProtectedRoute>
         } />
         
         <Route path="/create" element={
           <ProtectedRoute user={user} loading={loading}>
-            <CreateEntry user={user} addEntry={addEntry} handleLogout={handleLogout} />
+            <CreateEntry user={user} addEntry={addEntry} projectsList={projectsList} handleLogout={handleLogout} />
           </ProtectedRoute>
         } />
 

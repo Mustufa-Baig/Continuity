@@ -1,28 +1,27 @@
 const mongoose = require('mongoose')
 
-const entrySchema = new mongoose.Schema(
+const projectSchema = new mongoose.Schema(
   {
-    
-    project: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Project'
-    },
-    content: {
+    title: {
       type: String,
       minLength: 2,
       required: true,
     },
-    user: {
+    entries: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Entry'
+    }],
+    users: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
-    }
+    }],
   },
   {
     timestamps: true,
   }
 )
 
-entrySchema.set('toJSON', {
+projectSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
@@ -30,6 +29,6 @@ entrySchema.set('toJSON', {
   }
 })
 
-const Entry = mongoose.model('Entry', entrySchema)
+const Project = mongoose.model('Project', projectSchema)
 
-module.exports = Entry
+module.exports = Project

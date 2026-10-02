@@ -36,7 +36,7 @@ const EntriesList = ({ entries }) => {
         >
           <div className="flex justify-between items-center gap-2 min-w-0">
             <h2 className="w-[60%] block min-w-0 p-1 pl-3 rounded-xs truncate text-xl italic bg-neutral-100">
-              {entry.title}
+              {entry.project.title}
             </h2>
             <h3 className="min-w-0 m-2 max-w-full break-words text-neutral-500 font-thin">{entry.user.username}</h3>
           </div>

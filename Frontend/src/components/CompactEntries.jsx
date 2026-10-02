@@ -30,7 +30,7 @@ const CompactEntries = ({ entries }) => {
         >
             <div className="flex justify-between items-center gap-2 min-w-0">
               <h2 className="w-[60%] block min-w-0 p-1 pl-3 rounded-xs truncate font-thin text-lg italic bg-neutral-100">
-                {entry.title}
+                {entry.project.title}
               </h2>
               <p className="max-w-[40%] shrink-0 font-thin text-sm truncate text-neutral-400">
                 {new Date(entry.createdAt).toLocaleDateString()}

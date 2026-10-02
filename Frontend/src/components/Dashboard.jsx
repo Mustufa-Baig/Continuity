@@ -3,8 +3,9 @@ import BlockGraph from './BlockGraph'
 import AttentionGraph from './AttentionGraph'
 import Header from './Header'
 import CompactEntries from './CompactEntries'
+import ProjectsList from './ProjectsList'
 
-const Dashboard = ({ user, entries, graphData, handleLogout }) => {
+const Dashboard = ({ user, entries, projectsList, graphData, handleLogout }) => {
   return (
     <div className="flex min-h-[100vh] h-full">
       <Sidebar />
@@ -15,6 +16,7 @@ const Dashboard = ({ user, entries, graphData, handleLogout }) => {
           <AttentionGraph />
         </div>
         <CompactEntries entries={entries}/>
+        <ProjectsList projectsList={projectsList}/>
       </div>
     </div>
   )
